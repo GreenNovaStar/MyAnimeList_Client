@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/MyAnimeList_Client.iml" filepath="$PROJECT_DIR$/.idea/MyAnimeList_Client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/myanimelist_client.iml" filepath="$PROJECT_DIR$/myanimelist_client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android/myanimelist_client_android.iml" filepath="$PROJECT_DIR$/android/myanimelist_client_android.iml" />
     </modules>
   </component>
 </project>
