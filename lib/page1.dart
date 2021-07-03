@@ -1,79 +1,53 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:flutter/services.dart';
-import 'dart:convert' as convert;
-
-import 'package:http/http.dart' as http;
 import 'package:myanimelist_client/anime_ranking.dart';
-import 'package:myanimelist_client/json_mock_data.dart';
-import 'package:myanimelist_client/oauth_authentication.dart';
-import 'package:myanimelist_client/page1.dart';
 
-import 'dart:math';
-
-import 'package:myanimelist_client/user_authorization.dart';
-
-import 'package:myanimelist_client/json_mock_data.dart';
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+class Page1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePage(),
+    Future<AnimeRanking> readJson() async {
+      final data = await json.decode(jsonTopAnime);
+      AnimeRanking animeRanking = AnimeRanking.fromJson(data);
+      return animeRanking;
+    }
+
+    return FutureBuilder(
+      future: readJson(),
+      builder: (BuildContext context, AsyncSnapshot<AnimeRanking> snapshot) {
+        Widget child;
+        if (snapshot.hasData) {
+          print("data recieved");
+          child = ListView.builder(
+            shrinkWrap: true,
+            itemCount: snapshot.data!.data!.length,
+            itemBuilder: (context, index) {
+              return AnimeDetails(snapshot.data!.data![index].node);
+              // return Text(
+              //     snapshot.data!.data![index].node!.title ?? "No title");
+            },
+          );
+        } else {
+          child = Container(height: 0.0, width: 0.0);
+          print("no data received");
+        }
+        return child;
+      },
     );
   }
 }
 
-// ignore: use_key_in_widget_constructors
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("[Logo]"),
+Widget AnimeDetails(Node? anime) {
+  return Card(
+    child: ListTile(
+      leading: Image.network(
+        anime!.mainPicture!.medium ?? "",
+        height: 300,
+        alignment: Alignment.center,
       ),
-      // body: Page1(),
-      // body: Center(
-      //   child: Column(
-      //     children: [
-      //       TextButton(
-      //         child: Text("Press Me"),
-      //         onPressed: () {},
-      //       ),
-      //       OAuthAuthentication(),
-      //     ],
-      //   ),
-      // ),
-      body: Center(
-        child: OAuthAuthentication(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-      ),
-    );
-  }
+      title: Text(anime.title ?? ""),
+    ),
+  );
 }
 
 const jsonTopAnime = """{
