@@ -1,14 +1,15 @@
-import 'dart:convert';
-
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'dart:convert' as convert;
+import 'package:myanimelist_client/page1.dart';
+import 'package:myanimelist_client/profile_page.dart';
+import 'package:myanimelist_client/user_authorization.dart';
 
-import 'package:http/http.dart' as http;
-import 'package:oauth2/oauth2.dart' as oauth2;
+import 'package:myanimelist_client/json_mock_data.dart';
 
-import 'dart:math';
+import 'API/User/user_api_calls.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -32,79 +33,102 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: LoadingPage(),
     );
   }
 }
 
 // ignore: use_key_in_widget_constructors
 class HomePage extends StatelessWidget {
-  /// #1. Generate a new Code Verifier / Code Challenge.
-  String generateCodeVerifier() {
-    var random = Random.secure();
-    var values = List<int>.generate(100, (i) => random.nextInt(255));
-    print(base64UrlEncode(values).substring(0, 128));
-    return base64UrlEncode(values).substring(0, 128);
-  }
-
-  /// #2. Print the URL needed to authorise your application.
-  void printNewAuthorizationUrl() {
-    String _clientID = "a89850dc68b67d40d2d91988cbb0c4e5";
-    String _codeChallenge =
-        "C8tH7kXlJ7vRvHmwlt5zIGtcTr1TjFeWrWl0XZtkBbfGAvriadvr38r5NNiWHfhMfVwmOL5t5EehKYtF-yJY07YUj5G2KwkyUXQ1X4x0IkF7AYDOyzCyKhV9Xj9lDuel";
-    var url =
-        'https://api.myanimelist.net/v2/oauth2/authorize?response_type=code&client_id=$_clientID&code_challenge=$_codeChallenge';
-    print("Authorise your application by clicking here: $url\n");
-  }
-
-  void GetAnimeRanking() async {
-    // This example uses the Google Books API to search for books about http.
-    // https://developers.google.com/books/docs/overview
-    var url = Uri.https('https://api.myanimelist.net/v2', '/anime/ranking',
-        {'q': '{http}', 'Authorization': 'a89850dc68b67d40d2d91988cbb0c4e5'});
-
-    // Await the http get response, then decode the json-formatted response.
-    var response = await http.get(url);
-    if (response.statusCode == 200) {
-      var jsonResponse =
-          convert.jsonDecode(response.body) as Map<String, dynamic>;
-      var itemCount = jsonResponse['totalItems'];
-      print('Number of books about http: $itemCount.');
-    } else {
-      print('Request failed with status: ${response.statusCode}.');
-    }
-  }
-
-  // void GetAnimeRanking() async {
-  //   // This example uses the Google Books API to search for books about http.
-  //   // https://developers.google.com/books/docs/overview
-  //   var url = Uri.https('https://api.myanimelist.net/v2', '/anime/ranking',
-  //       {'q': '{http}', 'Authorization': 'a89850dc68b67d40d2d91988cbb0c4e5'});
-  //
-  //   // Await the http get response, then decode the json-formatted response.
-  //   var response = await http.get(url);
-  //   if (response.statusCode == 200) {
-  //     var jsonResponse =
-  //         convert.jsonDecode(response.body) as Map<String, dynamic>;
-  //     var itemCount = jsonResponse['totalItems'];
-  //     print('Number of books about http: $itemCount.');
-  //   } else {
-  //     print('Request failed with status: ${response.statusCode}.');
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("[Logo]"),
+        title: const Text("[Logo]"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.person),
+            onPressed: () async {
+              getUserDetails().then(
+                (value) => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(user: value),
+                  ),
+                ),
+              );
+              //ProfilePage();
+            },
+          )
+        ],
       ),
-      body: Center(
-        child: Text("Hello World"),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => printNewAuthorizationUrl(),
+      body: Page1(),
+      // body: const Center(child: Text("Hello World")),
+    );
+  }
+}
+
+class LoginPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+              Container(
+                width: size.width / 1.5,
+                height: size.width / 1.5,
+                color: Colors.greenAccent,
+                child: const Center(child: Text("[Logo]")),
+              ),
+              TextButton(
+                onPressed: () {
+                  authorizeUser(context);
+                },
+                child: const Text("Login to MyAnimeList"),
+              ),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
+            ],
+          ),
+        ),
       ),
     );
+  }
+}
+
+class LoadingPage extends StatefulWidget {
+  @override
+  _LoadingPageState createState() => _LoadingPageState();
+}
+
+class _LoadingPageState extends State<LoadingPage> {
+  late bool loggedIn;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    isUserAuthenticated().then((value) {
+      loggedIn = value;
+    });
+    Timer(const Duration(seconds: 2), onClose);
+  }
+
+  void onClose() {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => loggedIn ? HomePage() : LoginPage()));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(body: Center(child: Text("Loading")));
   }
 }
