@@ -1,4 +1,4 @@
-import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/anime_ranking_class.dart';
+import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/node_class.dart';
 
 class RelatedAnime {
   late Node node;

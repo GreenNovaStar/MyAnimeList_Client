@@ -1,10 +1,10 @@
 import 'dart:core';
 
 import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/alternative_title_class.dart';
-import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/anime_ranking_class.dart';
 import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/anime_statistics_class.dart';
 import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/broadcast_class.dart';
 import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/genre_class.dart';
+import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/main_picture_class.dart';
 import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/recommendation_class.dart';
 import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/related_anime_class.dart';
 import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/start_season_class.dart';
