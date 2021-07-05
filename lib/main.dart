@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:myanimelist_client/page1.dart';
+import 'package:myanimelist_client/profile_page.dart';
 import 'package:myanimelist_client/user_authorization.dart';
 
 import 'package:myanimelist_client/json_mock_data.dart';
+
+import 'API/User/user_api_calls.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +18,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -43,9 +45,25 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("[Logo]"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.person),
+            onPressed: () async {
+              getUserDetails().then(
+                (value) => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfilePage(user: value),
+                  ),
+                ),
+              );
+              //ProfilePage();
+            },
+          )
+        ],
       ),
-      // body: Page1(),
-      body: const Center(child: Text("Hello World")),
+      body: Page1(),
+      // body: const Center(child: Text("Hello World")),
     );
   }
 }
@@ -60,10 +78,12 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              SizedBox(height: size.height * 0.05,),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
               Container(
-                width: size.width/1.5,
-                height: size.width/1.5,
+                width: size.width / 1.5,
+                height: size.width / 1.5,
                 color: Colors.greenAccent,
                 child: const Center(child: Text("[Logo]")),
               ),
@@ -73,7 +93,9 @@ class LoginPage extends StatelessWidget {
                 },
                 child: const Text("Login to MyAnimeList"),
               ),
-              SizedBox(height: size.height * 0.05,),
+              SizedBox(
+                height: size.height * 0.05,
+              ),
             ],
           ),
         ),
@@ -88,11 +110,10 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
-
   late bool loggedIn;
 
   @override
-  void initState()  {
+  void initState() {
     // TODO: implement initState
     super.initState();
     isUserAuthenticated().then((value) {
@@ -102,7 +123,8 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   void onClose() {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => loggedIn ? HomePage() : LoginPage()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => loggedIn ? HomePage() : LoginPage()));
   }
 
   @override

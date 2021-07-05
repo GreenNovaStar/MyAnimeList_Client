@@ -61,7 +61,7 @@ class Node {
     id = json['id'];
     title = json['title'];
     mainPicture = json['main_picture'] != null
-        ? new MainPicture.fromJson(json['main_picture'])
+        ? MainPicture.fromJson(json['main_picture'])
         : null;
   }
 

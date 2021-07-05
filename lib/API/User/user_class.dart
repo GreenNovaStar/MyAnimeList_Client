@@ -1,12 +1,12 @@
-import 'package:myanimelist_client/API/User/anime_statistics_class.dart';
+import 'package:myanimelist_client/API/User/user_anime_statistics_class.dart';
 
 class User {
-  late String id;
+  late int id;
   late String name;
   late String location;
   late String joinedAt;
   late String picture;
-  late AnimeStatistics statistics;
+  late UserAnimeStatistics statistics;
 
   User({
     required this.id,
@@ -23,7 +23,7 @@ class User {
     location = json['location'];
     joinedAt = json['joined_at'];
     picture = json['picture'];
-    statistics = AnimeStatistics.fromJson(json['anime_statistics']);
+    statistics = UserAnimeStatistics.fromJson(json['anime_statistics']);
   }
 
   Map<String, dynamic> toJson() {

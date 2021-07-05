@@ -41,7 +41,6 @@ void authorizeUser(BuildContext context) async {
   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
   // print("User authorized");
   // print("access token: ${tokenResponse.access_token}");
-
 }
 
 /// #1. Generate a new Code Verifier / Code Challenge.
