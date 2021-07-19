@@ -1,4 +1,5 @@
 class Ranking {
+  /// Anime rank
   int? rank;
 
   Ranking({this.rank});

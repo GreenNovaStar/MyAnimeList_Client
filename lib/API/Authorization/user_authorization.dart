@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:myanimelist_client/API/Authorization/authorization_class.dart';
 
-import 'main.dart';
+import '../../main.dart';
 
 String clientID = "a89850dc68b67d40d2d91988cbb0c4e5";
 late String codeResponse;
@@ -141,8 +141,6 @@ class _AuthorizationWebViewState extends State<AuthorizationWebView> {
   Widget build(BuildContext context) {
     Uri responseUrl;
 
-    // print("inside authorization web view");
-    // print("widget.url = ${widget.url}");
     return Scaffold(
       appBar: AppBar(
         title: const Text("Authorize with MyAnimeList"),
@@ -166,4 +164,14 @@ class _AuthorizationWebViewState extends State<AuthorizationWebView> {
       ),
     );
   }
+}
+
+void UserSignOut (BuildContext context) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.remove('tokenType');
+  prefs.remove('expiresIn');
+  prefs.remove('accessToken');
+  prefs.remove('refreshToken');
+  Navigator.pushReplacement(context,
+      MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
 }

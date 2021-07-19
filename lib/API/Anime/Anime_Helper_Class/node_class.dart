@@ -1,8 +1,11 @@
 import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/main_picture_class.dart';
 
 class Node {
+  /// Anime id
   int? id;
+  /// Anime title
   String? title;
+  /// Anime main picture
   MainPicture? mainPicture;
 
   Node({this.id, this.title, this.mainPicture});

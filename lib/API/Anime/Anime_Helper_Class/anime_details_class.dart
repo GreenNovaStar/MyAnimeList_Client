@@ -10,10 +10,16 @@ import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/related_anime_cl
 import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/start_season_class.dart';
 import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/studios_class.dart';
 
+import 'anime_theme_class.dart';
+
 class AnimeDetails {
+  /// Anime ID
   late int id;
+  /// Anime Romanji Title
   late String title;
+  /// Main Picture on MAL
   late MainPicture mainPicture;
+  /// Alternate titles
   late AlternativeTitle? alternativeTitle;
   late String? startDate;
   late String? endDate;
@@ -41,6 +47,8 @@ class AnimeDetails {
   late List<Recommendation>? recommendations;
   late List<Studio>? studios;
   late AnimeStatistics? animeStatistics;
+  late List<AnimeTheme>? animeOpening;
+  late List<AnimeTheme>? animeEnding;
 
   AnimeDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -112,6 +120,18 @@ class AnimeDetails {
     animeStatistics = json['statistics'] != null
         ? AnimeStatistics.fromJson(json['statistics'])
         : null;
+    if (json['opening_themes'] != null) {
+      animeOpening = <AnimeTheme>[];
+      json['opening_themes'].forEach((v) {
+        animeOpening!.add(AnimeTheme.fromJson(v));
+      });
+    }
+    if (json['ending_themes'] != null) {
+      animeEnding = <AnimeTheme>[];
+      json['ending_themes'].forEach((v) {
+        animeEnding!.add(AnimeTheme.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -149,6 +169,13 @@ class AnimeDetails {
     data['recommendations'] = recommendations!.map((v) => v.toJson()).toList();
     data['studios'] = studios!.map((v) => v.toJson()).toList();
     data['statistics'] = animeStatistics!.toJson();
+    if (animeOpening != null) {
+      data['opening_themes'] =
+          animeOpening!.map((v) => v.toJson()).toList();
+    }
+    if (animeEnding != null) {
+      data['ending_themes'] = animeEnding!.map((v) => v.toJson()).toList();
+    }
     return data;
   }
 }

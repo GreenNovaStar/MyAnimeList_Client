@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:myanimelist_client/API/User/user_class.dart';
 import 'package:myanimelist_client/page1.dart';
 import 'package:myanimelist_client/profile_page.dart';
-import 'package:myanimelist_client/user_authorization.dart';
+import 'API/Authorization/user_authorization.dart';
+import 'package:myanimelist_client/User/user_const.dart';
 
-import 'package:myanimelist_client/json_mock_data.dart';
-
+import 'API/User/user_anime_statistics_class.dart';
 import 'API/User/user_api_calls.dart';
 
 void main() async {
@@ -39,9 +40,23 @@ class MyApp extends StatelessWidget {
 }
 
 // ignore: use_key_in_widget_constructors
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+
+  User userInfo = defaultUser;
+
+  @override
+  void initState() {
+    super.initState();
+    getUserDetails().then((value) => userInfo = value).whenComplete((){setState((){});});
+  }
   @override
   Widget build(BuildContext context) {
+    // getUserDetails().then((value) => userInfo = value);
     return Scaffold(
       appBar: AppBar(
         title: const Text("[Logo]"),
@@ -57,10 +72,38 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               );
-              //ProfilePage();
+              // ProfilePage(user: userInfo);
             },
           )
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 100,width: 100,
+                    child: CircleAvatar(
+                      // child: Icon(Icons.person),
+                      foregroundImage: NetworkImage(userInfo.picture),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(userInfo.name),
+                  ),
+                ],
+              ),
+            ),
+            TextButton(
+              onPressed: () => UserSignOut(context),
+              child: const Text("Sign Out"),
+            )
+          ],
+        ),
       ),
       body: Page1(),
       // body: const Center(child: Text("Hello World")),
@@ -129,6 +172,11 @@ class _LoadingPageState extends State<LoadingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text("Loading")));
+    return const Scaffold(
+      body: Center(
+        // child: Text("Loading"),
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 }

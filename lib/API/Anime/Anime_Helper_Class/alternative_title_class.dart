@@ -1,6 +1,9 @@
 class AlternativeTitle {
+  /// Alternate names for the anime
   late List<String> synonyms;
+  /// English name for the anime
   late String en;
+  /// Japanese name for the anime
   late String? ja;
 
   AlternativeTitle({

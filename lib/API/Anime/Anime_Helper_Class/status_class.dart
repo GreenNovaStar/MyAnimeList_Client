@@ -1,9 +1,9 @@
 class Status {
-  late String watching;
-  late String completed;
-  late String onHold;
-  late String dropped;
-  late String planToWatch;
+  late var watching;
+  late var completed;
+  late var onHold;
+  late var dropped;
+  late var planToWatch;
 
   Status.fromJson(Map<String, dynamic> json) {
     watching = json['watching'];
