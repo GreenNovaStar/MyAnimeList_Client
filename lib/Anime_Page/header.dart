@@ -8,20 +8,26 @@ Widget AnimeDetailsHeader(BuildContext context, AnimeDetails animeDetails) {
   double width = size.width * 0.5;
   var numFormatter = NumberFormat('###,###,###');
 
-  print(animeDetails.rank);
   return Row(
     crossAxisAlignment: CrossAxisAlignment.start,
     mainAxisSize: MainAxisSize.max,
     children: [
       Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          width: width,
-          height: height,
-          child: animeDetails.mainPicture.large != ""
-              ? Image.network(animeDetails.mainPicture.large ?? "",
-                  fit: BoxFit.fitHeight)
-              : Image.asset('assets/images/myanimelist_logo_short.png'),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1.5,
+            ),
+          ),
+          child: SizedBox(
+            width: width,
+            height: height,
+            child: animeDetails.mainPicture.large != ""
+                ? Image.network(animeDetails.mainPicture.large ?? "",
+                    fit: BoxFit.cover)
+                : Image.asset('assets/images/myanimelist_logo_short.png'),
+          ),
         ),
       ),
       SizedBox(
@@ -29,17 +35,28 @@ Widget AnimeDetailsHeader(BuildContext context, AnimeDetails animeDetails) {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            StatisticCard(const Icon(Icons.star), 'Score',
+                animeDetails.mean ?? "N/A", size),
             StatisticCard(
-                const Icon(Icons.star), 'Score', animeDetails.mean ?? "N/A", size),
+                const Icon(Icons.trending_up_rounded),
+                'Rank',
+                animeDetails.rank != null
+                    ? "#${numFormatter.format(animeDetails.rank)}"
+                    : "N/A",
+                size),
             StatisticCard(
-                const Icon(Icons.trending_up_rounded), 'Rank',
-                animeDetails.rank != null ? "#${numFormatter.format(animeDetails.rank)}" : "N/A",
+                const Icon(Icons.favorite_rounded),
+                'Popularity',
+                animeDetails.popularity != null
+                    ? "#${numFormatter.format(animeDetails.popularity)}"
+                    : "N/A",
                 size),
-            StatisticCard(const Icon(Icons.favorite_rounded), 'Popularity',
-                animeDetails.popularity != null ? "#${numFormatter.format(animeDetails.popularity)}" : "N/A",
-                size),
-            StatisticCard(const Icon(Icons.groups_rounded), 'Users',
-                animeDetails.numListUsers != null ? numFormatter.format(animeDetails.numListUsers) : "N/A",
+            StatisticCard(
+                const Icon(Icons.groups_rounded),
+                'Users',
+                animeDetails.numListUsers != null
+                    ? numFormatter.format(animeDetails.numListUsers)
+                    : "N/A",
                 size),
           ],
         ),

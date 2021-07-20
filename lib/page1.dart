@@ -206,7 +206,7 @@ class AnimeRankingList extends StatelessWidget {
 }
 
 Widget AnimeCard(Data? anime, Size size, BuildContext context) {
-  String picture = anime!.node!.mainPicture!.medium ?? "";
+  String picture = anime!.node!.mainPicture!.large ?? "";
   // double height = size.width * 0.35;
   // double width = size.width * 0.35;
   return InkWell(
@@ -234,7 +234,7 @@ Widget AnimeCard(Data? anime, Size size, BuildContext context) {
                 width: 130,
                 height: 200,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(12.0),
                   child: Image.network(
                     picture,
                     fit: BoxFit.cover,
@@ -277,7 +277,7 @@ Widget AnimeCard(Data? anime, Size size, BuildContext context) {
                 softWrap: true,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(letterSpacing: 0.5),
+                style: const TextStyle(letterSpacing: 0.5),
               ),
             ),
           ),
