@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/anime_details_class.dart';
+import 'package:myanimelist_client/Anime_Page/anime_themes_page.dart';
 import 'package:myanimelist_client/Anime_Page/header.dart';
 import 'package:myanimelist_client/Anime_Page/information.dart';
 
@@ -26,12 +27,15 @@ class AnimeDetailsPage extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(animeDetails.title, style: TextStyle(fontSize: 24),),
+            child: Text(
+              animeDetails.title,
+              style: const TextStyle(fontSize: 24),
+            ),
           ),
           AnimeDetailsHeader(context, animeDetails),
+          AnimeSynoposis(context, animeDetails),
           AnimeInfo(context, animeDetails),
-          AnimeInfo(context, animeDetails),
-          AnimeInfo(context, animeDetails),
+          AnimeThemesCard(context, animeDetails),
         ],
       ),
     );

@@ -15,10 +15,13 @@ import 'anime_theme_class.dart';
 class AnimeDetails {
   /// Anime ID
   late int id;
+
   /// Anime Romanji Title
   late String title;
+
   /// Main Picture on MAL
   late MainPicture mainPicture;
+
   /// Alternate titles
   late AlternativeTitle? alternativeTitle;
   late String? startDate;
@@ -47,8 +50,8 @@ class AnimeDetails {
   late List<Recommendation>? recommendations;
   late List<Studio>? studios;
   late AnimeStatistics? animeStatistics;
-  late List<AnimeTheme>? animeOpening;
-  late List<AnimeTheme>? animeEnding;
+  List<AnimeTheme>? animeOpening;
+  List<AnimeTheme>? animeEnding;
 
   AnimeDetails.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -170,12 +173,57 @@ class AnimeDetails {
     data['studios'] = studios!.map((v) => v.toJson()).toList();
     data['statistics'] = animeStatistics!.toJson();
     if (animeOpening != null) {
-      data['opening_themes'] =
-          animeOpening!.map((v) => v.toJson()).toList();
+      data['opening_themes'] = animeOpening!.map((v) => v.toJson()).toList();
     }
     if (animeEnding != null) {
       data['ending_themes'] = animeEnding!.map((v) => v.toJson()).toList();
     }
     return data;
   }
+
+  // String toString() {
+  //   return """
+  //   id: $id,
+  //   title: $title,
+  //   mainPicture: ${mainPicture.toString()},
+  //   alternativeTitle: ${alternativeTitle.toString()},
+  //   startDate: $startDate,
+  //   endDate: $endDate,
+  //   synopsis: $synopsis,
+  //   mean: $mean,
+  //   rank: $rank,
+  //   popularity: $popularity,
+  //   numListUsers: $numListUsers,
+  //   numScoringUsers: $numScoringUsers,
+  //   nsfw: $nsfw,
+  //   createdAt: $createdAt,
+  //   updatedAt: $updatedAt,
+  //   mediaType: $mediaType,
+  //   status: ${status!.replaceAll("\n", " ")},
+  //   """;
+  // }
 }
+  // late int? rank;
+  // late int? popularity;
+  // late int? numListUsers;
+  // late int? numScoringUsers;
+  // late String? nsfw;
+  // late String? createdAt;
+  // late String? updatedAt;
+  // late String? mediaType;
+  // late String? status;
+  // late List<Genres>? genre;
+  // late int? numEpisodes;
+  // late StartSeason? startSeason;
+  // late Broadcast? broadcast;
+  // late String? source;
+  // late int? averageEpisodeDuration;
+  // late String? rating;
+  // late List<MainPicture>? pictures;
+  // late String? background;
+  // late List<RelatedAnime>? relatedAnime;
+  // late List<Recommendation>? recommendations;
+  // late List<Studio>? studios;
+  // late AnimeStatistics? animeStatistics;
+  // late List<AnimeTheme>? animeOpening;
+  // late List<AnimeTheme>? animeEnding;

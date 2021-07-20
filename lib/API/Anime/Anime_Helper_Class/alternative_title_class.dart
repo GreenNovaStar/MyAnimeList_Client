@@ -1,16 +1,15 @@
 class AlternativeTitle {
   /// Alternate names for the anime
   late List<String> synonyms;
+
   /// English name for the anime
   late String en;
+
   /// Japanese name for the anime
   late String? ja;
 
-  AlternativeTitle({
-    required this.synonyms,
-    required this.en,
-    required this.ja
-  });
+  AlternativeTitle(
+      {required this.synonyms, required this.en, required this.ja});
 
   AlternativeTitle.fromJson(Map<String, dynamic> json) {
     if (json['synonyms'] != null) {
@@ -28,5 +27,7 @@ class AlternativeTitle {
     return data;
   }
 
-
+  String toString() {
+    return "synonyms: ${synonyms.toList()}, en: $en, ja: $ja";
+  }
 }

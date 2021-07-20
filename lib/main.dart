@@ -46,14 +46,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   User userInfo = defaultUser;
 
   @override
   void initState() {
     super.initState();
-    getUserDetails().then((value) => userInfo = value).whenComplete((){setState((){});});
+    getUserDetails().then((value) => userInfo = value).whenComplete(() {
+      setState(() {});
+    });
   }
+
   @override
   Widget build(BuildContext context) {
     // getUserDetails().then((value) => userInfo = value);
@@ -81,21 +83,35 @@ class _HomePageState extends State<HomePage> {
         child: ListView(
           children: [
             DrawerHeader(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 100,width: 100,
-                    child: CircleAvatar(
-                      // child: Icon(Icons.person),
-                      foregroundImage: NetworkImage(userInfo.picture),
+              child: InkWell(
+                onTap: () async {
+                  getUserDetails().then(
+                    (value) => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ProfilePage(user: value),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(userInfo.name),
-                  ),
-                ],
+                  );
+                },
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(
+                      height: 100,
+                      width: 100,
+                      child: CircleAvatar(
+                        // child: Icon(Icons.person),
+                        foregroundImage: NetworkImage(userInfo.picture),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(userInfo.name),
+                    ),
+                  ],
+                ),
               ),
             ),
             TextButton(

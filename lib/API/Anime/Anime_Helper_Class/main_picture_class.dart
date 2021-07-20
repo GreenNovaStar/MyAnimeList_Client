@@ -15,4 +15,8 @@ class MainPicture {
     data['large'] = large;
     return data;
   }
+
+  String toString() {
+    return "[medium: $medium, large: $large]";
+  }
 }
