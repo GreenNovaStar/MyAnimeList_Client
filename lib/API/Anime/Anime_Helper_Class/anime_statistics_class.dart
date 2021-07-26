@@ -15,4 +15,8 @@ class AnimeStatistics {
     data['numListUsers'] = numListUsers;
     return data;
   }
+
+  String toString() {
+    return toJson().toString();
+  }
 }

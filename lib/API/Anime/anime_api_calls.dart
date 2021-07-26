@@ -55,18 +55,16 @@ Future<AnimeRanking> getAnimeRanking(
   return animeRanking;
 }
 
-Future<AnimeRanking> getTopUpcomingAnime() async {
+Future<AnimeRanking> searchAnime(
+    String searchQuery, int limit, int offset) async {
   tokenResponse = await retrieveTokens();
   final Dio dio = Dio(_baseOptions);
   Response response;
   late AnimeRanking animeRanking;
 
   response = await dio.get(
-    "https://api.myanimelist.net/v2/anime/ranking",
-    queryParameters: {
-      "ranking_type": "upcoming",
-      "limit": 10,
-    },
+    "https://api.myanimelist.net/v2/anime",
+    queryParameters: {"q": searchQuery, "limit": limit, "offset": offset},
   );
 
   if (response.statusCode == 200) {
@@ -77,46 +75,68 @@ Future<AnimeRanking> getTopUpcomingAnime() async {
   return animeRanking;
 }
 
-Future<AnimeRanking> getTopAnime() async {
-  tokenResponse = await retrieveTokens();
-  final Dio dio = Dio(_baseOptions);
-  Response response;
-  late AnimeRanking animeRanking;
+// Future<AnimeRanking> getTopUpcomingAnime() async {
+//   tokenResponse = await retrieveTokens();
+//   final Dio dio = Dio(_baseOptions);
+//   Response response;
+//   late AnimeRanking animeRanking;
 
-  response = await dio.get(
-    "https://api.myanimelist.net/v2/anime/ranking",
-    queryParameters: {
-      "ranking_type": "all",
-      "limit": 10,
-    },
-  );
+//   response = await dio.get(
+//     "https://api.myanimelist.net/v2/anime/ranking",
+//     queryParameters: {
+//       "ranking_type": "upcoming",
+//       "limit": 10,
+//     },
+//   );
 
-  if (response.statusCode == 200) {
-    animeRanking = AnimeRanking.fromJson(response.data);
-  } else {
-    //todo: refresh access token
-  }
-  return animeRanking;
-}
+//   if (response.statusCode == 200) {
+//     animeRanking = AnimeRanking.fromJson(response.data);
+//   } else {
+//     //todo: refresh access token
+//   }
+//   return animeRanking;
+// }
 
-Future<AnimeRanking> getTopTVAnime() async {
-  tokenResponse = await retrieveTokens();
-  final Dio dio = Dio(_baseOptions);
-  Response response;
-  late AnimeRanking animeRanking;
+// Future<AnimeRanking> getTopAnime() async {
+//   tokenResponse = await retrieveTokens();
+//   final Dio dio = Dio(_baseOptions);
+//   Response response;
+//   late AnimeRanking animeRanking;
 
-  response = await dio.get(
-    "https://api.myanimelist.net/v2/anime/ranking",
-    queryParameters: {
-      "ranking_type": "tv",
-      "limit": 10,
-    },
-  );
+//   response = await dio.get(
+//     "https://api.myanimelist.net/v2/anime/ranking",
+//     queryParameters: {
+//       "ranking_type": "all",
+//       "limit": 10,
+//     },
+//   );
 
-  if (response.statusCode == 200) {
-    animeRanking = AnimeRanking.fromJson(response.data);
-  } else {
-    //todo: refresh access token
-  }
-  return animeRanking;
-}
+//   if (response.statusCode == 200) {
+//     animeRanking = AnimeRanking.fromJson(response.data);
+//   } else {
+//     //todo: refresh access token
+//   }
+//   return animeRanking;
+// }
+
+// Future<AnimeRanking> getTopTVAnime() async {
+//   tokenResponse = await retrieveTokens();
+//   final Dio dio = Dio(_baseOptions);
+//   Response response;
+//   late AnimeRanking animeRanking;
+
+//   response = await dio.get(
+//     "https://api.myanimelist.net/v2/anime/ranking",
+//     queryParameters: {
+//       "ranking_type": "tv",
+//       "limit": 10,
+//     },
+//   );
+
+//   if (response.statusCode == 200) {
+//     animeRanking = AnimeRanking.fromJson(response.data);
+//   } else {
+//     //todo: refresh access token
+//   }
+//   return animeRanking;
+// }

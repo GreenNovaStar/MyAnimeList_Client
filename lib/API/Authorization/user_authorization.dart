@@ -23,22 +23,26 @@ final BaseOptions _options = BaseOptions(
 
 void authorizeUser(BuildContext context) async {
   tokenResponse = await retrieveTokens();
-  if(tokenResponse.token_type == ""){
+  if (tokenResponse.token_type == "") {
     String _codeChallenge = generateCodeVerifier(); //step 1
     String _url = printNewAuthorizationUrl(_codeChallenge); //step 2
-    await Navigator.push(context, MaterialPageRoute(builder: (context) =>
-      AuthorizationWebView(url: _url))).then((value) {//step 3, 4 and 5
-        print("code response = " + codeResponse);
-        getUserToken(codeResponse, _codeChallenge); //Step  6
-        print("User authorized by webview");
-        print("access token: ${tokenResponse.access_token}");
-      }
-    );
-  }else{
+    await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AuthorizationWebView(url: _url)))
+        .then((value) {
+      //step 3, 4 and 5
+      print("code response = " + codeResponse);
+      getUserToken(codeResponse, _codeChallenge); //Step  6
+      print("User authorized by webview");
+      print("access token: ${tokenResponse.access_token}");
+    });
+  } else {
     print("User authorized by shared preferences");
     print("access token: ${tokenResponse.access_token}");
   }
-  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomePage()));
+  Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (context) => HomePage()));
   // print("User authorized");
   // print("access token: ${tokenResponse.access_token}");
 }
@@ -107,16 +111,20 @@ Future<TokenResponse> retrieveTokens() async {
   int expiresIn = prefs.getInt('expiresIn') ?? 0;
   String accessToken = prefs.getString('accessToken') ?? "";
   String refreshToken = prefs.getString('refreshToken') ?? "";
-  TokenResponse localData = TokenResponse(token_type: tokenType, expires_in: expiresIn, access_token: accessToken, refresh_token: refreshToken);
+  TokenResponse localData = TokenResponse(
+      token_type: tokenType,
+      expires_in: expiresIn,
+      access_token: accessToken,
+      refresh_token: refreshToken);
   return localData;
 }
 
 Future<bool> isUserAuthenticated() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String tokenType = prefs.getString('tokenType') ?? "";
-  if(tokenType == ""){
+  if (tokenType == "") {
     return false;
-  }else{
+  } else {
     return true;
   }
 }
@@ -166,7 +174,7 @@ class _AuthorizationWebViewState extends State<AuthorizationWebView> {
   }
 }
 
-void UserSignOut (BuildContext context) async {
+void UserSignOut(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.remove('tokenType');
   prefs.remove('expiresIn');

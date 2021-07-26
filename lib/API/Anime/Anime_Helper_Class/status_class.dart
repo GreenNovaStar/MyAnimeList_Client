@@ -22,4 +22,8 @@ class Status {
     data['plan_to_watch'] = planToWatch;
     return data;
   }
+
+  String toString() {
+    return toJson().toString();
+  }
 }

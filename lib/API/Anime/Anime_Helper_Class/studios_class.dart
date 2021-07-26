@@ -18,4 +18,8 @@ class Studio {
     data['name'] = name;
     return data;
   }
+
+  String toString() {
+    return toJson().toString();
+  }
 }

@@ -21,6 +21,11 @@ class _Page1State extends State<Page1> {
     //   AnimeRanking animeRanking = AnimeRanking.fromJson(data);
     //   return animeRanking;
     // }
+    // return AnimeRankingList(
+    //   getAnime: getAnimeRanking("airing", 10, 0),
+    //   rankingHeader: "Top Airing Anime",
+    //   rankingType: "airing",
+    // );
     return RefreshIndicator(
       onRefresh: () => Future.delayed(const Duration(seconds: 1))
           .then((value) => setState(() {})),
@@ -131,7 +136,6 @@ class AnimeRankingList extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<AnimeRanking> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasData) {
-            print("data recieved");
             return Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -178,7 +182,7 @@ class AnimeRankingList extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return AnimeCard(snapshot.data!.data![index],
-                          MediaQuery.of(context).size, context);
+                          MediaQuery.of(context).size, context, true);
                     },
                   ),
                 ),
@@ -205,7 +209,7 @@ class AnimeRankingList extends StatelessWidget {
   }
 }
 
-Widget AnimeCard(Data? anime, Size size, BuildContext context) {
+Widget AnimeCard(Data? anime, Size size, BuildContext context, bool ranking) {
   String picture = anime!.node!.mainPicture!.large ?? "";
   // double height = size.width * 0.35;
   // double width = size.width * 0.35;
@@ -241,31 +245,32 @@ Widget AnimeCard(Data? anime, Size size, BuildContext context) {
                   ),
                 ),
               ),
-              Positioned(
-                left: 1,
-                top: 1,
-                child: Container(
-                  width: 20,
-                  height: 20,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: anime.ranking!.rank == 1
-                        ? const Color(0xFFFFD700)
-                        : anime.ranking!.rank == 2
-                            ? const Color(0xFFC0C0C0)
-                            : anime.ranking!.rank == 3
-                                ? const Color(0xFFCD7F32)
-                                : Theme.of(context).primaryColor,
-                  ),
-                  child: Center(
-                    child: Text(
-                      "${anime.ranking!.rank}",
-                      style: TextStyle(
-                          color: Theme.of(context).secondaryHeaderColor),
+              if (ranking)
+                Positioned(
+                  left: 1,
+                  top: 1,
+                  child: Container(
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: anime.ranking!.rank == 1
+                          ? const Color(0xFFFFD700)
+                          : anime.ranking!.rank == 2
+                              ? const Color(0xFFC0C0C0)
+                              : anime.ranking!.rank == 3
+                                  ? const Color(0xFFCD7F32)
+                                  : Theme.of(context).primaryColor,
+                    ),
+                    child: Center(
+                      child: Text(
+                        "${anime.ranking!.rank}",
+                        style: TextStyle(
+                            color: Theme.of(context).secondaryHeaderColor),
+                      ),
                     ),
                   ),
                 ),
-              ),
             ],
           ),
           SizedBox(

@@ -12,4 +12,8 @@ class Paging {
     data['next'] = next;
     return data;
   }
+
+  String toString() {
+    return toJson().toString();
+  }
 }

@@ -13,4 +13,8 @@ class Ranking {
     data['rank'] = rank;
     return data;
   }
+
+  String toString() {
+    return toJson().toString();
+  }
 }

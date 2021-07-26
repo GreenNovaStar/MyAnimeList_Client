@@ -15,4 +15,8 @@ class Recommendation {
     data['num_recommendations'] = numRecommendations;
     return data;
   }
+
+  String toString() {
+    return toJson().toString();
+  }
 }

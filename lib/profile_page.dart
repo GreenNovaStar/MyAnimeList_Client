@@ -38,7 +38,7 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
-  Widget ProfilePicture(Size size){
+  Widget ProfilePicture(Size size) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -55,15 +55,15 @@ class ProfilePage extends StatelessWidget {
           // color: Colors.black,
           child: user.picture != ""
               ? Image.network(
-            user.picture,
-            alignment: Alignment.center,
-          )
+                  user.picture,
+                  alignment: Alignment.center,
+                )
               : Image.asset(
-            'assets/images/myanimelist_logo_short.png',
-            height: 130,
-            width: 90,
-            alignment: Alignment.center,
-          ),
+                  'assets/images/myanimelist_logo_short.png',
+                  height: 130,
+                  width: 90,
+                  alignment: Alignment.center,
+                ),
         ),
       ),
     );
@@ -71,6 +71,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(user.toString());
     return Scaffold(
       appBar: AppBar(
         title: Text("${user.name}'s Profile"),

@@ -14,36 +14,45 @@ Widget AnimeInfo(BuildContext context, AnimeDetails animeDetails) {
     children: [
       Text("Anime Information"),
       Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 1.5,
+          ),
+        ),
         // height: height * 0.25,
         width: width * 0.75,
-        color: Colors.teal[100],
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Type: ${animeDetails.mediaType!.capitalizeAbbreviations()}"),
-            animeDetails.numEpisodes != 0
-                ? Text(
-                    "${animeDetails.numEpisodes == 1 ? "Episode" : "Episodes"}: ${animeDetails.numEpisodes}")
-                : const Text("Episodes: Unknown"),
-            animeDetails.averageEpisodeDuration != 0
-                ? Text(
-                    "Duration: ${Duration(seconds: animeDetails.averageEpisodeDuration ?? 0).inMinutes} minutes")
-                : const Text("Duration: Unknown"),
-            Text("Status: ${animeDetails.status!.prettifyString()}"),
-            Text(
-                "Aired: ${animeDetails.startDate ?? "?"} to ${animeDetails.endDate ?? '?'}"),
-            Text(
-                "Premiered: ${animeDetails.startSeason!.season.capitalizeFirstLetter()} ${animeDetails.startSeason!.year}"),
-            animeDetails.broadcast != null
-                ? Text(
-                    "Broadcast: ${animeDetails.broadcast!.dayOfTheWeek.capitalizeFirstLetter()}s at ${animeDetails.broadcast!.startTime} (JST)")
-                : const Text("Broadcast: Unknown"),
-            Text("Studios: ${listStudios(animeDetails.studios)}"),
-            Text("Source: ${animeDetails.source!.prettifyString()}"),
-            Text(
-                "Rating: ${prettifyRatings(animeDetails.rating ?? "Unknown")}"),
-            Text("Genres: ${listGenres(animeDetails.genre)}")
-          ],
+        // color: Colors.teal[100],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                  "Type: ${animeDetails.mediaType!.capitalizeAbbreviations()}"),
+              animeDetails.numEpisodes != 0
+                  ? Text(
+                      "${animeDetails.numEpisodes == 1 ? "Episode" : "Episodes"}: ${animeDetails.numEpisodes}")
+                  : const Text("Episodes: Unknown"),
+              animeDetails.averageEpisodeDuration != 0
+                  ? Text(
+                      "Duration: ${Duration(seconds: animeDetails.averageEpisodeDuration ?? 0).inMinutes} minutes")
+                  : const Text("Duration: Unknown"),
+              Text("Status: ${animeDetails.status!.prettifyString()}"),
+              Text(
+                  "Aired: ${animeDetails.startDate ?? "?"} to ${animeDetails.endDate ?? '?'}"),
+              Text(
+                  "Premiered: ${animeDetails.startSeason!.season.capitalizeFirstLetter()} ${animeDetails.startSeason!.year}"),
+              animeDetails.broadcast != null
+                  ? Text(
+                      "Broadcast: ${animeDetails.broadcast!.dayOfTheWeek.capitalizeFirstLetter()}s at ${animeDetails.broadcast!.startTime} (JST)")
+                  : const Text("Broadcast: Unknown"),
+              Text("Studios: ${listStudios(animeDetails.studios)}"),
+              Text("Source: ${animeDetails.source!.prettifyString()}"),
+              Text(
+                  "Rating: ${prettifyRatings(animeDetails.rating ?? "Unknown")}"),
+              Text("Genres: ${listGenres(animeDetails.genre)}")
+            ],
+          ),
         ),
       )
     ],
@@ -52,16 +61,96 @@ Widget AnimeInfo(BuildContext context, AnimeDetails animeDetails) {
 
 Widget AnimeSynoposis(BuildContext context, AnimeDetails animeDetails) {
   return Container(
-    color: Colors.red[50],
+    // color: Colors.red[50],
     child: Column(
       children: [
-        Text("Synoposis"),
-        Text(animeDetails.synopsis ?? "None"),
-        Text("Background"),
-        Text(animeDetails.background ?? "None"),
+        animeDetails.synopsis!.isNotEmpty
+            ? const Text("Synoposis")
+            : const SizedBox.shrink(),
+        animeDetails.synopsis!.isNotEmpty
+            ? DescriptionTextWidget(text: animeDetails.synopsis ?? "None")
+            : const SizedBox.shrink(),
+        animeDetails.background!.isNotEmpty
+            ? const Text("Background")
+            : const SizedBox.shrink(),
+        animeDetails.background!.isNotEmpty
+            ? DescriptionTextWidget(text: animeDetails.background ?? "None")
+            : const SizedBox.shrink(),
       ],
     ),
   );
+}
+
+class DescriptionTextWidget extends StatefulWidget {
+  final String text;
+
+  const DescriptionTextWidget({required this.text});
+
+  @override
+  _DescriptionTextWidgetState createState() => _DescriptionTextWidgetState();
+}
+
+class _DescriptionTextWidgetState extends State<DescriptionTextWidget> {
+  late String firstHalf;
+  late String secondHalf;
+
+  bool flag = true;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.text.length > 170) {
+      firstHalf = widget.text.substring(0, 170);
+      secondHalf = widget.text.substring(170, widget.text.length);
+    } else {
+      firstHalf = widget.text;
+      secondHalf = "";
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+      child: secondHalf.isEmpty
+          ? Text(
+              firstHalf,
+              maxLines: 3,
+            )
+          : Column(
+              children: <Widget>[
+                flag
+                    ? Text(
+                        firstHalf + " ...",
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
+                        softWrap: false,
+                      )
+                    : Text(firstHalf + secondHalf),
+                InkWell(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: Text(
+                          flag ? "show more" : "show less",
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    setState(() {
+                      flag = !flag;
+                    });
+                  },
+                ),
+              ],
+            ),
+    );
+  }
 }
 
 String listStudios(List<Studio>? studio) {

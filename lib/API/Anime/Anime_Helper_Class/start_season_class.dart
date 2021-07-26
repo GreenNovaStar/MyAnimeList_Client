@@ -2,10 +2,7 @@ class StartSeason {
   late int year;
   late String season;
 
-  StartSeason({
-    required this.year,
-    required this.season
-  });
+  StartSeason({required this.year, required this.season});
 
   StartSeason.fromJson(Map<String, dynamic> json) {
     year = json['year'];
@@ -17,5 +14,9 @@ class StartSeason {
     data['year'] = year;
     data['season'] = season;
     return data;
+  }
+
+  String toString() {
+    return toJson().toString();
   }
 }

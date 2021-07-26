@@ -28,6 +28,6 @@ class AlternativeTitle {
   }
 
   String toString() {
-    return "synonyms: ${synonyms.toList()}, en: $en, ja: $ja";
+    return toJson().toString();
   }
 }

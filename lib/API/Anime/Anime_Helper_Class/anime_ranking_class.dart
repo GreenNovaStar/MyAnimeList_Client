@@ -27,4 +27,8 @@ class AnimeRanking {
     }
     return data;
   }
+
+  String toString() {
+    return toJson().toString();
+  }
 }

@@ -8,14 +8,13 @@ class User {
   late String picture;
   late UserAnimeStatistics statistics;
 
-  User({
-    required this.id,
-    required this.name,
-    required this.location,
-    required this.joinedAt,
-    required this.picture,
-    required this.statistics
-  });
+  User(
+      {required this.id,
+      required this.name,
+      required this.location,
+      required this.joinedAt,
+      required this.picture,
+      required this.statistics});
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -35,5 +34,9 @@ class User {
     data['picture'] = picture;
     data['anime_statistics'] = statistics.toJson();
     return data;
+  }
+
+  String toString() {
+    return toJson().toString();
   }
 }

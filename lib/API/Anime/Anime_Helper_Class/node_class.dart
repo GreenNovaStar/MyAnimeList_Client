@@ -3,8 +3,10 @@ import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/main_picture_cla
 class Node {
   /// Anime id
   int? id;
+
   /// Anime title
   String? title;
+
   /// Anime main picture
   MainPicture? mainPicture;
 
@@ -26,5 +28,9 @@ class Node {
       data['main_picture'] = mainPicture!.toJson();
     }
     return data;
+  }
+
+  String toString() {
+    return toJson().toString();
   }
 }
