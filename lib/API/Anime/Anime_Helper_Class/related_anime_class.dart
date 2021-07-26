@@ -18,4 +18,8 @@ class RelatedAnime {
     data['relation_type_formatted'] = relationTypeFormatted;
     return data;
   }
+
+  String toString() {
+    return toJson().toString();
+  }
 }

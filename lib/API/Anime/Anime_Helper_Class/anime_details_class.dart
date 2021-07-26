@@ -181,49 +181,7 @@ class AnimeDetails {
     return data;
   }
 
-  // String toString() {
-  //   return """
-  //   id: $id,
-  //   title: $title,
-  //   mainPicture: ${mainPicture.toString()},
-  //   alternativeTitle: ${alternativeTitle.toString()},
-  //   startDate: $startDate,
-  //   endDate: $endDate,
-  //   synopsis: $synopsis,
-  //   mean: $mean,
-  //   rank: $rank,
-  //   popularity: $popularity,
-  //   numListUsers: $numListUsers,
-  //   numScoringUsers: $numScoringUsers,
-  //   nsfw: $nsfw,
-  //   createdAt: $createdAt,
-  //   updatedAt: $updatedAt,
-  //   mediaType: $mediaType,
-  //   status: ${status!.replaceAll("\n", " ")},
-  //   """;
-  // }
+  String toString() {
+    return toJson().toString();
+  }
 }
-  // late int? rank;
-  // late int? popularity;
-  // late int? numListUsers;
-  // late int? numScoringUsers;
-  // late String? nsfw;
-  // late String? createdAt;
-  // late String? updatedAt;
-  // late String? mediaType;
-  // late String? status;
-  // late List<Genres>? genre;
-  // late int? numEpisodes;
-  // late StartSeason? startSeason;
-  // late Broadcast? broadcast;
-  // late String? source;
-  // late int? averageEpisodeDuration;
-  // late String? rating;
-  // late List<MainPicture>? pictures;
-  // late String? background;
-  // late List<RelatedAnime>? relatedAnime;
-  // late List<Recommendation>? recommendations;
-  // late List<Studio>? studios;
-  // late AnimeStatistics? animeStatistics;
-  // late List<AnimeTheme>? animeOpening;
-  // late List<AnimeTheme>? animeEnding;

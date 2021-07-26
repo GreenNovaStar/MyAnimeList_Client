@@ -15,23 +15,22 @@ class UserAnimeStatistics {
   late int numTimesRewatched;
   late double meanScore;
 
-  UserAnimeStatistics({
-    required this.numItemsWatching,
-    required this.numItemsCompleted,
-    required this.numItemsOnHold,
-    required this.numItemsDropped,
-    required this.numItemsPlanToWatch,
-    required this.numItems,
-    required this.numDaysWatching,
-    required this.numDaysWatched,
-    required this.numDaysCompleted,
-    required this.numDaysOnHold,
-    required this.numDaysDropped,
-    required this.numDays,
-    required this.numEpisodes,
-    required this.numTimesRewatched,
-    required this.meanScore
-  });
+  UserAnimeStatistics(
+      {required this.numItemsWatching,
+      required this.numItemsCompleted,
+      required this.numItemsOnHold,
+      required this.numItemsDropped,
+      required this.numItemsPlanToWatch,
+      required this.numItems,
+      required this.numDaysWatching,
+      required this.numDaysWatched,
+      required this.numDaysCompleted,
+      required this.numDaysOnHold,
+      required this.numDaysDropped,
+      required this.numDays,
+      required this.numEpisodes,
+      required this.numTimesRewatched,
+      required this.meanScore});
 
   UserAnimeStatistics.fromJson(Map<String, dynamic> json) {
     numItemsWatching = json['num_items_watching'];
@@ -71,4 +70,7 @@ class UserAnimeStatistics {
     return data;
   }
 
+  String toString() {
+    return toJson().toString();
+  }
 }

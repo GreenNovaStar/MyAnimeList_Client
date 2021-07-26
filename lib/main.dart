@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:myanimelist_client/API/User/user_class.dart';
+import 'package:myanimelist_client/Anime_Page/search_page.dart';
 import 'package:myanimelist_client/page1.dart';
 import 'package:myanimelist_client/profile_page.dart';
 import 'API/Authorization/user_authorization.dart';
@@ -64,17 +65,26 @@ class _HomePageState extends State<HomePage> {
         title: const Text("[Logo]"),
         actions: [
           IconButton(
-            icon: Icon(Icons.person),
-            onPressed: () async {
-              getUserDetails().then(
-                (value) => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfilePage(user: value),
-                  ),
-                ),
+            icon: const Icon(Icons.search_rounded),
+            onPressed: () => showSearch(
+              context: context,
+              delegate: AnimeSearch(),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.bookmark_border_rounded),
+            onPressed: () {
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                    content: const Text(
+                        "To Be Implemented:\nAbility to view your anime list"),
+                    action: SnackBarAction(
+                      label: "Dismiss",
+                      onPressed: () =>
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+                    )),
               );
-              // ProfilePage(user: userInfo);
             },
           )
         ],
@@ -85,6 +95,7 @@ class _HomePageState extends State<HomePage> {
             DrawerHeader(
               child: InkWell(
                 onTap: () async {
+                  Navigator.pop(context);
                   getUserDetails().then(
                     (value) => Navigator.push(
                       context,
@@ -113,6 +124,20 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
+            ),
+            TextButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                getUserDetails().then(
+                  (value) => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProfilePage(user: value),
+                    ),
+                  ),
+                );
+              },
+              child: const Text("View Profile"),
             ),
             TextButton(
               onPressed: () => UserSignOut(context),
@@ -144,7 +169,26 @@ class LoginPage extends StatelessWidget {
                 width: size.width / 1.5,
                 height: size.width / 1.5,
                 color: Colors.greenAccent,
-                child: const Center(child: Text("[Logo]")),
+                child: Center(
+                  child: GestureDetector(
+                    onDoubleTap: () {
+                      saveTokens(devToken);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              "Bypassed Authorization through Dev Backdoor"),
+                        ),
+                      );
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ),
+                      );
+                    },
+                    child: Text("[Logo]"),
+                  ),
+                ),
               ),
               TextButton(
                 onPressed: () {

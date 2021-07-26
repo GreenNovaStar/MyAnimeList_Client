@@ -3,17 +3,18 @@ import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/anime_details_cl
 import 'package:myanimelist_client/API/Anime/Anime_Helper_Class/anime_theme_class.dart';
 
 Widget AnimeThemesCard(BuildContext context, AnimeDetails animeDetails) {
-  print("Anime opening ${animeDetails.animeOpening}");
-  print("Anime ending ${animeDetails.animeEnding}");
   return Container(
-    color: Colors.blue[50],
+    // color: Colors.blue[50],
     child: Column(
       children: [
-        // Text("Anime Theme"),
-        Text("Anime Openings"),
-        Text(listToString(animeDetails.animeOpening)),
-        Text("Anime Ending"),
-        Text(listToString(animeDetails.animeEnding)),
+        ExpansionTile(
+          title: const Text("Anime Openings"),
+          children: [Text(listToString(animeDetails.animeOpening))],
+        ),
+        ExpansionTile(
+          title: const Text("Anime Endings"),
+          children: [Text(listToString(animeDetails.animeEnding))],
+        ),
       ],
     ),
   );

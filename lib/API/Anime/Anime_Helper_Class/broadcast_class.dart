@@ -2,10 +2,7 @@ class Broadcast {
   late String dayOfTheWeek;
   late String startTime;
 
-  Broadcast({
-    required this.dayOfTheWeek,
-    required this.startTime
-  });
+  Broadcast({required this.dayOfTheWeek, required this.startTime});
 
   Broadcast.fromJson(Map<String, dynamic> json) {
     dayOfTheWeek = json['day_of_the_week'];
@@ -17,5 +14,9 @@ class Broadcast {
     data['day_of_the_week'] = dayOfTheWeek;
     data['start_time'] = startTime;
     return data;
+  }
+
+  String toString() {
+    return toJson().toString();
   }
 }

@@ -17,6 +17,6 @@ class MainPicture {
   }
 
   String toString() {
-    return "[medium: $medium, large: $large]";
+    return toJson().toString();
   }
 }

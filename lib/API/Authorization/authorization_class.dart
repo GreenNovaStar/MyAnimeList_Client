@@ -1,16 +1,15 @@
 class TokenResponse {
   late String token_type;
-  late int    expires_in;
+  late int expires_in;
   late String access_token;
   late String refresh_token;
 
   // ignore: non_constant_identifier_names
-  TokenResponse({
-    required this.token_type,
-    required this.expires_in,
-    required this.access_token,
-    required this.refresh_token
-  });
+  TokenResponse(
+      {required this.token_type,
+      required this.expires_in,
+      required this.access_token,
+      required this.refresh_token});
 
   TokenResponse.fromJson(Map<String, dynamic> json) {
     token_type = json['token_type'];
@@ -26,5 +25,9 @@ class TokenResponse {
     data['access_token'] = access_token;
     data['refresh_token'] = refresh_token;
     return data;
+  }
+
+  String toString() {
+    return toJson().toString();
   }
 }

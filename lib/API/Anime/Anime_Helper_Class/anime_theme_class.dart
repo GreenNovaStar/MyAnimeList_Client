@@ -22,4 +22,8 @@ class AnimeTheme {
     data['text'] = songName;
     return data;
   }
+
+  String toString() {
+    return toJson().toString();
+  }
 }

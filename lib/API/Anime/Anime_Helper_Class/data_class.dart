@@ -10,7 +10,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     node = json['node'] != null ? Node.fromJson(json['node']) : null;
     ranking =
-    json['ranking'] != null ? Ranking.fromJson(json['ranking']) : null;
+        json['ranking'] != null ? Ranking.fromJson(json['ranking']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -22,5 +22,9 @@ class Data {
       data['ranking'] = ranking!.toJson();
     }
     return data;
+  }
+
+  String toString() {
+    return toJson().toString();
   }
 }
