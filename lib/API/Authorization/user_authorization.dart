@@ -9,7 +9,7 @@ import 'package:myanimelist_client/API/Authorization/authorization_class.dart';
 
 import '../../main.dart';
 
-String clientID = "a89850dc68b67d40d2d91988cbb0c4e5";
+String clientID = "your_client_id_or_secret";
 late String codeResponse;
 late TokenResponse tokenResponse;
 
