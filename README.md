@@ -1,18 +1,15 @@
-# myanimelist_client
+# MyAnimeList Client
 
-A MyAnimeList Client for a better UI app
+A [MyAnimeList](https://myanimelist.net/) Client that will be an unoffical replacement for the official client. 
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- View trending animes
+- View currently airing animes
+- View upcoming animes
+- Search for Animes
+- Keep track of your anime watch list
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots
+![Screenshot_1](https://user-images.githubusercontent.com/25333225/147065393-bc55223b-6bf7-4772-ad0a-05ed3a161ef7.png)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
-test commit on vscode
