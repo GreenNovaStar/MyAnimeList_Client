@@ -1,0 +1,15 @@
+# Global codegen config for freezed + json_serializable.
+# Dart model fields are camelCase (e.g. mainPicture); the MAL API v2 JSON is
+# snake_case (main_picture). field_rename: snake performs that mapping for
+# every model automatically, so individual fields don't need @JsonKey(name:).
+# Genuinely irregular keys can still override with a local @JsonKey.
+targets:
+  $default:
+    builders:
+      json_serializable:
+        options:
+          field_rename: snake
+          # Nested models emit via their own toJson() (self-contained cache JSON).
+          explicit_to_json: true
+          # Omit null-valued keys from toJson output.
+          include_if_null: false

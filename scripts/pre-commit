@@ -1,0 +1,27 @@
+#!/bin/sh
+
+echo "Running dart format check..."
+dart format --set-exit-if-changed lib/ test/
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ Formatting issues found. Run 'dart format lib/ test/' to fix."
+  exit 1
+fi
+
+echo "Running dart analyze..."
+dart analyze lib/
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ Analysis issues found. Fix them before committing."
+  exit 1
+fi
+
+echo "Running tests..."
+flutter test
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ Tests failed. Fix them before committing."
+  exit 1
+fi
+
+echo "✔ Pre-commit checks passed."
